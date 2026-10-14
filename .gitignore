@@ -1,0 +1,20 @@
+
+@"
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+backend/.env
+
+# Python virtual environments
+.venv/
+backend/.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# IDE files
+.vscode/
+"@ | Set-Content .gitignore

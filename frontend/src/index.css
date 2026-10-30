@@ -1,0 +1,470 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #243c3b;
+  background: #fff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  --teal: #168b7c;
+  --teal-dark: #126b60;
+  --ink: #243c3b;
+  --muted: #839491;
+  --border: #e5eeea;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible {
+  outline: 3px solid #9bd8ca;
+  outline-offset: 2px;
+}
+
+#root { min-height: 100vh; }
+
+.auth-layout {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.92fr) minmax(440px, 1.08fr);
+  min-height: 100vh;
+}
+
+.brand-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  padding: 34px clamp(28px, 5vw, 75px) 25px;
+  color: white;
+  background: linear-gradient(145deg, #155f59 0%, #14786e 53%, #199485 100%);
+}
+
+.brand-panel::before,
+.brand-panel::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid #ffffff15;
+  border-radius: 50%;
+}
+
+.brand-panel::before {
+  width: 530px;
+  height: 530px;
+  right: -260px;
+  top: 13%;
+}
+
+.brand-panel::after {
+  width: 350px;
+  height: 350px;
+  right: -170px;
+  top: 24%;
+}
+
+.brand-header,
+.mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 800 18px 'Manrope', sans-serif;
+  letter-spacing: -.5px;
+}
+
+.brand-header > span strong,
+.mobile-brand > span strong {
+  color: #8ce0c6;
+}
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #176e63;
+  background: #e3f8ef;
+}
+
+.brand-content {
+  position: relative;
+  z-index: 1;
+  max-width: 500px;
+  padding: 42px 0;
+}
+
+.brand-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 11px;
+  border: 1px solid #ffffff35;
+  border-radius: 30px;
+  background: #ffffff0c;
+  color: #d5f5e9;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  font-weight: 700;
+}
+
+.brand-content h1 {
+  margin: 25px 0 19px;
+  font: 800 clamp(34px, 3.7vw, 49px)/1.22 'Manrope', sans-serif;
+  letter-spacing: -1.8px;
+}
+
+.brand-content h1 span { color: #a0ebd2; }
+
+.brand-description {
+  max-width: 390px;
+  color: #d1ebe5;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.benefit-list {
+  display: grid;
+  gap: 22px;
+  margin-top: 37px;
+}
+
+.benefit-list > div {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.benefit-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid #ffffff27;
+  border-radius: 13px;
+  background: #ffffff12;
+  color: #b1f0d9;
+}
+
+.benefit-list > div > span:last-child {
+  display: grid;
+  gap: 5px;
+}
+
+.benefit-list strong {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.benefit-list small {
+  color: #c6e4dd;
+  font-size: 10.5px;
+}
+
+.brand-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #c1e4dc;
+  font-size: 10px;
+}
+
+.form-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 34px clamp(24px, 5vw, 75px) 20px;
+  background: #fff;
+}
+
+.mobile-brand { display: none; }
+
+.auth-card {
+  width: 100%;
+  max-width: 405px;
+}
+
+.form-heading { text-align: center; }
+
+.form-icon {
+  width: 51px;
+  height: 51px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 19px;
+  border-radius: 16px;
+  background: #e8f7f1;
+  color: var(--teal);
+}
+
+.form-eyebrow {
+  margin: 0 0 9px;
+  color: var(--teal);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+
+.form-heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font: 800 26px 'Manrope', sans-serif;
+  letter-spacing: -.9px;
+}
+
+.form-subtitle {
+  margin: 10px 0 25px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 5px;
+  margin-bottom: 23px;
+  border-radius: 10px;
+  background: #f2f7f5;
+}
+
+.auth-tabs button {
+  padding: 11px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #839590;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.auth-tabs button.tab-active {
+  color: #197a6e;
+  background: #fff;
+  box-shadow: 0 2px 7px #193d3210;
+}
+
+.field-group { margin-bottom: 17px; }
+
+.field-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #415853;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-button {
+  margin-bottom: 8px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--teal);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 47px;
+  padding: 0 13px;
+  border: 1px solid #e1ebe6;
+  border-radius: 9px;
+  background: #fff;
+  color: #8aa099;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.input-wrap:focus-within {
+  border-color: #82c8b6;
+  box-shadow: 0 0 0 3px #dff4ed;
+}
+
+.input-wrap input {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #314e46;
+  font-size: 11px;
+}
+
+.input-wrap input::placeholder { color: #a4b1ad; }
+.input-wrap input:focus-visible { outline: none; }
+
+.password-toggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: #8aa099;
+}
+
+.field-hint {
+  display: block;
+  margin-top: 7px;
+  color: #93a39e;
+  font-size: 10px;
+}
+
+.terms-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 2px 0 17px;
+  color: #71857e;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.terms-row input {
+  margin: 2px 0 0;
+  accent-color: var(--teal);
+}
+
+.form-message {
+  margin: 0 0 14px;
+  padding: 11px 12px;
+  border: 1px solid #d5ece3;
+  border-radius: 8px;
+  background: #f0faf5;
+  color: #267b67;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.submit-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 47px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--teal);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 5px 12px #168b7c20;
+  transition: background .15s, transform .15s;
+}
+
+.submit-button:hover {
+  background: var(--teal-dark);
+  transform: translateY(-1px);
+}
+
+.form-divider {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 24px 0 18px;
+  color: #a0afaa;
+  font-size: 8px;
+  letter-spacing: 1.1px;
+  font-weight: 700;
+}
+
+.form-divider::before,
+.form-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: #eaf0ed;
+}
+
+.security-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px;
+  border: 1px solid #e5f0eb;
+  border-radius: 9px;
+  background: #f8fbf9;
+  color: #779087;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.security-note svg {
+  flex-shrink: 0;
+  color: var(--teal);
+}
+
+.switch-text {
+  margin: 22px 0 0;
+  text-align: center;
+  color: #82928d;
+  font-size: 11px;
+}
+
+.switch-text button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--teal);
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.form-footer {
+  margin-top: 28px;
+  text-align: center;
+  color: #a0afaa;
+  font-size: 9px;
+}
+
+@media (min-width: 1400px) {
+  .brand-panel { padding-left: 75px; padding-right: 65px; }
+  .form-panel { padding-left: 75px; padding-right: 75px; }
+}
+
+@media (max-width: 850px) {
+  .auth-layout { grid-template-columns: 1fr; }
+  .brand-panel { display: none; }
+  .form-panel { padding: 27px 22px 20px; }
+  .mobile-brand {
+    display: flex;
+    margin-bottom: 38px;
+    color: var(--ink);
+  }
+  .mobile-brand > span strong { color: var(--teal); }
+  .auth-card { max-width: 420px; }
+  .form-footer { margin-top: 32px; }
+}
+
+@media (max-width: 420px) {
+  .form-panel { padding-left: 18px; padding-right: 18px; }
+  .mobile-brand { margin-bottom: 27px; }
+  .form-heading h2 { font-size: 23px; }
+}

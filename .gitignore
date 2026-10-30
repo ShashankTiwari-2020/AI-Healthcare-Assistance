@@ -1,6 +1,4 @@
-
-@"
-# Environment variables and secrets
+﻿# Environment variables and secrets
 .env
 .env.*
 !.env.example
@@ -15,6 +13,14 @@ venv/
 __pycache__/
 *.py[cod]
 
+# Node dependencies and builds
+node_modules/
+frontend/node_modules/
+dist/
+build/
+
 # IDE files
 .vscode/
-"@ | Set-Content .gitignore
+
+# Local archives
+*.zip

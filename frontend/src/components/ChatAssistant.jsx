@@ -18,6 +18,7 @@ import {
   LoaderCircle,
 } from "lucide-react";
 import "./ChatAssistant.css";
+import Documents, { saveDocumentFile } from "./Documents";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -117,6 +118,7 @@ function createChat() {
 }
 
 export default function ChatAssistant({ onBack }) {
+  const [tab, setTab] = useState("chat");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -140,17 +142,34 @@ const [activeChat, setActiveChat] = useState(
 
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-  localStorage.setItem("mediconnect_chats", JSON.stringify(chats));
-}, [chats]);
-
+ 
 useEffect(() => {
-  if (activeChat) {
-    localStorage.setItem("mediconnect_active_chat", activeChat);
-  } else {
-    localStorage.removeItem("mediconnect_active_chat");
+  try {
+    const savedChats = localStorage.getItem("mediconnect_chats");
+    const parsedChats = savedChats ? JSON.parse(savedChats) : [];
+
+    setChats(Array.isArray(parsedChats) ? parsedChats : []);
+
+    const savedActiveChat = localStorage.getItem("mediconnect_active_chat");
+    const selectedChat = Array.isArray(parsedChats)
+      ? parsedChats.find((chat) => chat.id === savedActiveChat)
+      : null;
+
+    if (selectedChat) {
+      setActiveChat(selectedChat.id);
+      setMessages(Array.isArray(selectedChat.messages) ? selectedChat.messages : []);
+    } else {
+      setActiveChat(null);
+      setMessages([]);
+    }
+  } catch (error) {
+    console.error("Could not load local chat history:", error);
+    setChats([]);
+    setActiveChat(null);
+    setMessages([]);
   }
-}, [activeChat]);
+}, []);
+
 
   function updateChatHistory(chatId, nextMessages) {
     setChats((previous) =>
@@ -342,6 +361,16 @@ async function handleSend(event) {
       );
     }
 
+    // Save analyzed reports to My Documents.
+if (selectedFile) {
+  try {
+    await saveDocumentFile(selectedFile);
+  } catch (storageError) {
+    console.error("Document storage failed:", storageError);
+    setError("Report analyzed, but it could not be saved to My Documents.");
+  }
+}
+
     const assistantMessage = {
       role: "assistant",
       text: data.reply || "No response was returned by the server.",
@@ -391,25 +420,28 @@ async function handleSend(event) {
 
         <nav className="mc-nav" aria-label="Main navigation">
           <button
-            className="mc-nav-item active"
-            type="button"
-          >
-            <MessageCircle size={18} />
-            AI Assistant
-          </button>
+  className={`mc-nav-item ${tab === "chat" ? "active" : ""}`}
+  type="button"
+  onClick={() => {
+    setError("");
+    setTab("chat");
+  }}
+>
+  <MessageCircle size={18} />
+  AI Assistant
+</button>
 
           <button
-            className="mc-nav-item"
-            type="button"
-            onClick={() =>
-              setError(
-                "Medical report analysis requires backend integration."
-              )
-            }
-          >
-            <FileText size={18} />
-            My Reports
-          </button>
+  className="mc-nav-item"
+  type="button"
+  onClick={() => {
+    setError("");
+    setTab("documents");
+  }}
+>
+  <FileText size={18} />
+  My Reports
+</button>
 
           <button
             className="mc-nav-item"
@@ -515,7 +547,15 @@ async function handleSend(event) {
           </div>
         </aside>
 
-        <section className="mc-main">
+        {tab === "documents" ? (
+  <section className="mc-main">
+    <Documents
+      onBack={() => setTab("chat")}
+      embedded
+    />
+  </section>
+) : (
+  <section className="mc-main">
           <div className="mc-conversation" aria-live="polite">
             {messages.length === 0 ? (
               <div className="mc-welcome">
@@ -727,8 +767,9 @@ async function handleSend(event) {
               multilingual responses require backend support.
             </p>
           </div>
-        </section>
-      </div>
-    </main>
+          </section>
+)}
+</div>
+</main>
   );
 }
